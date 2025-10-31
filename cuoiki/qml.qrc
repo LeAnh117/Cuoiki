@@ -1,0 +1,67 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>images/battery.png</file>
+        <file>images/battery_label.png</file>
+        <file>images/bg_charge.jpg</file>
+        <file>images/car_bg.jpg</file>
+        <file>images/DashboardFrameSport-mask.png</file>
+        <file>images/Gauge_RPM.png</file>
+        <file>images/Gauge_Speed.png</file>
+        <file>images/Icon_TurnLeft_OFF.png</file>
+        <file>images/MusicPlayer_CircleRemaining.png</file>
+        <file>images/MusicPlayer_Cover.png</file>
+        <file>img/background.png</file>
+        <file>img/background.svg</file>
+        <file>img/cirlcle.svg</file>
+        <file>img/Ellipse 1.svg</file>
+        <file>img/Ellipse 5.svg</file>
+        <file>img/Ellipse 6.svg</file>
+        <file>img/img.txt</file>
+        <file>img/maxLimit.svg</file>
+        <file>img/Model 3.png</file>
+        <file>img/needle.svg</file>
+        <file>img/Rectangle 4.svg</file>
+        <file>img/ring.svg</file>
+        <file>img/sub.svg</file>
+        <file>img/Subtract.svg</file>
+        <file>img/tickmark.svg</file>
+        <file>icons/Background.png</file>
+        <file>icons/Base.svg</file>
+        <file>icons/bxs_music.svg</file>
+        <file>icons/car.png</file>
+        <file>icons/Car.svg</file>
+        <file>icons/Car_icon.svg</file>
+        <file>icons/clarity_settings-solid.svg</file>
+        <file>icons/entypo_home.svg</file>
+        <file>icons/ep_menu.svg</file>
+        <file>icons/eva_phone-call-fill.svg</file>
+        <file>icons/Headlights.svg</file>
+        <file>icons/icons.txt</file>
+        <file>icons/Navigation.png</file>
+        <file>icons/Navigation.svg</file>
+        <file>icons/Top Navigation.svg</file>
+        <file>icons/Vector.svg</file>
+        <file>icons/Vector 1.svg</file>
+        <file>icons/Vector 2.svg</file>
+        <file>icons/light/bxs_music.svg</file>
+        <file>icons/light/Car_Icon.svg</file>
+        <file>icons/light/clarity_settings-solid.svg</file>
+        <file>icons/light/entypo_home.svg</file>
+        <file>icons/light/ep_menu.svg</file>
+        <file>icons/light/eva_phone-call-fill.svg</file>
+        <file>icons/light/light.txt</file>
+        <file>img/fuel.png</file>
+        <file>img/xang.png</file>
+        <file>img/icon-park-solid_right-two.svg</file>
+        <file>img/mdi_car-battery.svg</file>
+        <file>img/mdi_car-handbrake.svg</file>
+        <file>img/mdi_car-light-dimmed.svg</file>
+        <file>img/mdi_car-light-fog.svg</file>
+        <file>img/mdi_car-light-high.svg</file>
+        <file>img/mdi_oil.svg</file>
+        <file>img/mdi_seatbelt.svg</file>
+        <file>img/ph_engine-bold.svg</file>
+        <file>img/icon-park-solid_right.svg</file>
+    </qresource>
+</RCC>
