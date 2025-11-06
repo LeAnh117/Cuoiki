@@ -4,8 +4,8 @@ import QtQuick.Controls 2.15
 
 Window {
     id: root
-    width: 1000
-    height: 720
+    width: 1100
+    height: 500
     visible: true
     color: "#000000"
     title: qsTr("Dashboard Demo")
