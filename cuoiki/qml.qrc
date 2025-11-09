@@ -64,7 +64,9 @@
         <file>img/ph_engine-bold.svg</file>
         <file>img/icon-park-solid_right.svg</file>
         <file>imgIVI/startLogo.jpeg</file>
-        <file>SplashHandler.qml</file>
         <file>IVImain.qml</file>
+        <file>imgIVI/S.png</file>
+        <file>imgIVI/Background.jpg</file>
+        <file>imgIVI/setting-icon.jpg</file>
     </qresource>
 </RCC>

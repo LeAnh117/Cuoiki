@@ -1,41 +1,33 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QQmlComponent>
 #include <QQuickWindow>
-#include "SplashHandler.h"
 #include <QDebug>
-
-static void openIVI() {
-    qDebug() << "Opening IVI...";
-    QQmlApplicationEngine *iviEngine = new QQmlApplicationEngine();
-    iviEngine->load(QUrl(QStringLiteral("qrc:/IVImain.qml")));
-    if (iviEngine->rootObjects().isEmpty()) {
-        qWarning() << "Cannot load IVIMain.qml";
-        return;
-    }
-    QObject *root = iviEngine->rootObjects().first();
-    QQuickWindow *win = qobject_cast<QQuickWindow *>(root);
-    if (win) {
-        win->show();
-        win->raise();
-        win->requestActivate();
-    } else {
-        root->setProperty("visible", true);
-    }
-}
 
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
 
-    SplashHandler splash; // emits splashFinished after timer or QML event
+    QQmlApplicationEngine engine;
 
-    QQmlApplicationEngine clusterEngine;
-    clusterEngine.load(QUrl(QStringLiteral("qrc:/main.qml")));
-    if (clusterEngine.rootObjects().isEmpty()) return -1;
+    // Tạo cửa sổ Cluster (main.qml)
+    QQmlComponent clusterComponent(&engine, QUrl(QStringLiteral("qrc:/main.qml")));
+    QObject *clusterWindow = clusterComponent.create();
 
-    QObject::connect(&splash, &SplashHandler::splashFinished, [](){
-        openIVI();
-    });
+    // Tạo cửa sổ IVI (IVImain.qml)
+    QQmlComponent iviComponent(&engine, QUrl(QStringLiteral("qrc:/IVImain.qml")));
+    QObject *iviWindow = iviComponent.create();
+
+    // Hiển thị cả hai cửa sổ
+    if (auto cluster = qobject_cast<QQuickWindow*>(clusterWindow))
+        cluster->show();
+    else
+        qWarning() << "Không thể load Cluster HMI!";
+
+    if (auto ivi = qobject_cast<QQuickWindow*>(iviWindow))
+        ivi->show();
+    else
+        qWarning() << "Không thể load IVI HMI!";
 
     return app.exec();
 }
