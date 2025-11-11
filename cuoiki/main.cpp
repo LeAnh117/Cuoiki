@@ -29,5 +29,9 @@ int main(int argc, char *argv[])
     else
         qWarning() << "Không thể load IVI HMI!";
 
+    // if (iviComponent.isError()) {
+    //     qWarning() << "IVI QML errors:" << iviComponent.errors();
+    // }
+
     return app.exec();
 }

@@ -67,6 +67,10 @@
         <file>IVImain.qml</file>
         <file>imgIVI/S.png</file>
         <file>imgIVI/Background.jpg</file>
-        <file>imgIVI/setting-icon.jpg</file>
+        <file>imgIVI/settings-cog.svg</file>
+        <file>Theme.qml</file>
+        <file>qmldir</file>
+        <file>imgIVI/car.svg</file>
+        <file>imgIVI/setting.svg</file>
     </qresource>
 </RCC>

@@ -3,6 +3,7 @@ import QtQuick.Controls 2.15
 import QtQuick.Window 2.15
 
 import QtQuick.Layouts 1.15
+import "." 1.0
 
 Window {
     id: root
@@ -11,6 +12,8 @@ Window {
     x: 900
     visible: true
     title: "IVI HMI"
+
+    property string currentTheme: "light" // or "light"
 
     // --- Màn hình khởi động ---
     Rectangle {
@@ -34,13 +37,12 @@ Window {
                 height: parent.height
                 opacity: 0.0
 
-                SequentialAnimation on opacity {
+                SequentialAnimation {
                     id: fadeAnim
-                    NumberAnimation { from: 0.0; to: 1.0; duration: 3000; easing.type: Easing.InOutQuad }
-                    PauseAnimation { duration: 500 }
-                    NumberAnimation { from: 1.0; to: 0.0; duration: 3000; easing.type: Easing.InOutQuad }
+                    NumberAnimation { target: logo; property: "opacity"; from: 0.0; to: 1.0; duration: 2000; easing.type: Easing.InOutQuad }
+                    PauseAnimation { duration: 1000 }
+                    NumberAnimation { target: logo; property: "opacity"; from: 1.0; to: 0.0; duration: 2000; easing.type: Easing.InOutQuad }
 
-                    // Khi animation xong → ẩn splash, hiện màn hình chính
                     onStopped: {
                         splashScreen.visible = false
                         mainScreen.visible = true
@@ -57,14 +59,32 @@ Window {
         id: mainScreen
         anchors.fill: parent
         visible: false
-        color: "black"
+        // color: currentTheme === "dark" ? "#121212" : "#EDEDED"
 
         // --- Hình nền ---
-        Image {
-            id: wallpaper
+        // Image {
+        //     id: wallpaper
+        //     anchors.fill: parent
+        //     source: "qrc:/imgIVI/Background.jpg"  // thay bằng ảnh nền thật
+        //     fillMode: Image.PreserveAspectCrop
+        // }
+        Rectangle {
+            id: background
             anchors.fill: parent
-            source: "qrc:/imgIVI/Background.jpg"  // thay bằng ảnh nền thật
-            fillMode: Image.PreserveAspectCrop
+            gradient: Gradient {
+                GradientStop { position: 0.0; color: "#0A0A0A" }   // đen sâu
+                GradientStop { position: 1.0; color: "#1F1F1F" }   // xám đậm
+            }
+        }
+        // Ánh sáng neon mờ trung tâm
+        Rectangle {
+            id: neonGlow
+            width: parent.width * 0.9
+            height: parent.height * 0.9
+            anchors.centerIn: parent
+            radius: width / 2
+            color: "#38FF14"   // neon xanh lá
+            opacity: 0.08       // rất nhẹ, không gây chói
         }
 
         GridLayout {
@@ -88,22 +108,32 @@ Window {
                         id: iconContainer
                         width: 70
                         height: 70
-                        radius: 20
-                        color: "transparent"
+                        radius: 30
                         anchors.horizontalCenter: parent.horizontalCenter
                         anchors.top: parent.top
                         anchors.topMargin: 10
+                        color: "transparent"
+                        border.color: Theme.neon
+                        border.width: 2
 
                         Image {
                             anchors.centerIn: parent
                             source: icon
-                            width: 80
-                            height: 80
+                            width: parent.width
+                            height: parent.height
+                            z: -1
+                            // color: currentTheme === "light" ? "black" : "white"
                             fillMode: Image.PreserveAspectFit
+
+                            // Đổi màu icon theo theme
+                            layer.enabled: true
+                            layer.samplerName: "source"
                         }
 
                         MouseArea {
                             anchors.fill: parent
+                            onPressed: iconContainer.border.color = Theme.textDark
+                            onReleased: iconContainer.border.color = Theme.neon
                             onClicked: console.log("Clicked on " + name)
                         }
                     }
@@ -124,14 +154,14 @@ Window {
         // --- Model dữ liệu ứng dụng ---
         ListModel {
             id: appModel
-            ListElement { name: "Cài đặt"; icon: "qrc:/imgIVI/setting-icon.jpg" }
-            ListElement { name: "Ngôn ngữ"; icon: "qrc:/imgIVI/setting-icon.jpg" }
-            ListElement { name: "Cuộc gọi"; icon: "qrc:/imgIVI/setting-icon.jpg" }
-            ListElement { name: "Tin nhắn"; icon: "qrc:/imgIVI/setting-icon.jpg" }
-            ListElement { name: "Chế độ lái"; icon: "qrc:/imgIVI/setting-icon.jpg" }
-            ListElement { name: "Âm nhạc"; icon: "qrc:/imgIVI/setting-icon.jpg" }
-            ListElement { name: "Bản đồ"; icon: "qrc:/imgIVI/setting-icon.jpg" }
-            ListElement { name: "Thời tiết"; icon: "qrc:/imgIVI/setting-icon.jpg" }
+            ListElement { name: "Cài đặt"; icon: "qrc:/imgIVI/setting.svg" }
+            ListElement { name: "Ngôn ngữ"; icon: "qrc:/imgIVI/setting.svg" }
+            ListElement { name: "Cuộc gọi"; icon: "qrc:/imgIVI/setting.svg" }
+            ListElement { name: "Tin nhắn"; icon: "qrc:/imgIVI/setting.svg" }
+            ListElement { name: "Chế độ lái"; icon: "qrc:/imgIVI/setting.svg" }
+            ListElement { name: "Âm nhạc"; icon: "qrc:/imgIVI/setting.svg" }
+            ListElement { name: "Bản đồ"; icon: "qrc:/imgIVI/setting.svg" }
+            ListElement { name: "Thời tiết"; icon: "qrc:/imgIVI/setting.svg" }
         }
     }
 
