@@ -78,5 +78,15 @@
         <file>imgIVI/language_D1.svg</file>
         <file>imgIVI/language-L.svg</file>
         <file>LanguageWindow.qml</file>
+        <file>imgIVI/call_D.svg</file>
+        <file>imgIVI/call_L.svg</file>
+        <file>imgIVI/map_D.svg</file>
+        <file>imgIVI/map_L.svg</file>
+        <file>imgIVI/message_D.svg</file>
+        <file>imgIVI/message_L.svg</file>
+        <file>imgIVI/music_D.svg</file>
+        <file>imgIVI/music_L.svg</file>
+        <file>imgIVI/weather_D.svg</file>
+        <file>imgIVI/weather_L.svg</file>
     </qresource>
 </RCC>

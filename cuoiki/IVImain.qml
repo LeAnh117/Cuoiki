@@ -213,11 +213,11 @@ Window {
             id: appModel
             ListElement { name: "Cài đặt"; iconD: "qrc:/imgIVI/setting.svg"; iconL: "qrc:/imgIVI/settingL.svg" }
             ListElement { name: "Ngôn ngữ"; iconD: "qrc:/imgIVI/language_D1.svg"; iconL: "qrc:/imgIVI/language-L.svg" }
-            ListElement { name: "Cuộc gọi"; iconD: "qrc:/imgIVI/setting.svg"; iconL: "qrc:/imgIVI/settingL.svg" }
-            ListElement { name: "Tin nhắn"; iconD: "qrc:/imgIVI/setting.svg"; iconL: "qrc:/imgIVI/settingL.svg" }
-            ListElement { name: "Âm nhạc"; iconD: "qrc:/imgIVI/setting.svg"; iconL: "qrc:/imgIVI/settingL.svg" }
-            ListElement { name: "Bản đồ"; iconD: "qrc:/imgIVI/setting.svg"; iconL: "qrc:/imgIVI/settingL.svg" }
-            ListElement { name: "Thời tiết"; iconD: "qrc:/imgIVI/setting.svg"; iconL: "qrc:/imgIVI/settingL.svg" }
+            ListElement { name: "Cuộc gọi"; iconD: "qrc:/imgIVI/call_D.svg"; iconL: "qrc:/imgIVI/call_L.svg" }
+            ListElement { name: "Tin nhắn"; iconD: "qrc:/imgIVI/message_D.svg"; iconL: "qrc:/imgIVI/message_L.svg" }
+            ListElement { name: "Âm nhạc"; iconD: "qrc:/imgIVI/music_D.svg"; iconL: "qrc:/imgIVI/music_L.svg" }
+            ListElement { name: "Bản đồ"; iconD: "qrc:/imgIVI/map_D.svg"; iconL: "qrc:/imgIVI/map_L.svg" }
+            ListElement { name: "Thời tiết"; iconD: "qrc:/imgIVI/weather_D.svg"; iconL: "qrc:/imgIVI/weather_L.svg" }
         }
         // --- Gọi cửa sổ Cài đặt ---
         SettingWindow {
