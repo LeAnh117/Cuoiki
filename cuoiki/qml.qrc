@@ -77,5 +77,6 @@
         <file>imgIVI/language_D.svg</file>
         <file>imgIVI/language_D1.svg</file>
         <file>imgIVI/language-L.svg</file>
+        <file>LanguageWindow.qml</file>
     </qresource>
 </RCC>

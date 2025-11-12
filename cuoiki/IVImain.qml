@@ -4,6 +4,7 @@ import QtQuick.Window 2.15
 
 import QtQuick.Layouts 1.15
 import "." 1.0
+
 Window {
     id: root
     width: 500
@@ -13,6 +14,44 @@ Window {
     title: "IVI HMI"
 
     property string currentTheme: "dark" // or "light"
+
+    // --- Ngôn ngữ hiện tại ---
+    property string currentLanguage: "vi"  // default
+
+    // --- Dictionary bản dịch ---
+    property var dict: {
+        "vi": {
+            "Cài đặt": "Cài đặt",
+            "Ngôn ngữ": "Ngôn ngữ",
+            "Cuộc gọi": "Cuộc gọi",
+            "Tin nhắn": "Tin nhắn",
+            "Âm nhạc": "Âm nhạc",
+            "Bản đồ": "Bản đồ",
+            "Thời tiết": "Thời tiết"
+        },
+        "en": {
+            "Cài đặt": "Settings",
+            "Ngôn ngữ": "Language",
+            "Cuộc gọi": "Calls",
+            "Tin nhắn": "Messages",
+            "Âm nhạc": "Music",
+            "Bản đồ": "Maps",
+            "Thời tiết": "Weather"
+        }
+    }
+
+    // --- Hàm dịch ---
+    function tr(key) {
+        if(dict[currentLanguage] && dict[currentLanguage][key])
+            return dict[currentLanguage][key]
+        return key
+    }
+    function loadLanguage(lang) {
+        currentLanguage = lang
+        console.log("Language changed to:", lang)
+    }
+
+
 
     // --- Màn hình khởi động ---
     Rectangle {
@@ -136,13 +175,17 @@ Window {
                             onPressed: iconContainer.pressed = true
                             onReleased: iconContainer.pressed = false
                             onClicked: {
-                                console.log("Clicked on " + name)
-                                switch(name) {
+                                console.log("Clicked on " + root.tr(name))
+                                switch(root.tr(name)) {
                                 case "Cài đặt":
                                     settingsWin.visible = true
                                     break
                                 case "Ngôn ngữ":
-
+                                    languageDialog.open()
+                                    break
+                                case "Language":
+                                    languageDialog.open()
+                                    break
                                 case "Cuộc gọi":
 
                                 case "Tin nhắn":
@@ -153,7 +196,7 @@ Window {
                     }
 
                     Text {
-                        text: name
+                        text: root.tr(name)
                         color: root.currentTheme === "dark" ? Theme.textDark : Theme.textLight
                         font.pixelSize: 18
                         horizontalAlignment: Text.AlignHCenter
@@ -172,7 +215,6 @@ Window {
             ListElement { name: "Ngôn ngữ"; iconD: "qrc:/imgIVI/language_D1.svg"; iconL: "qrc:/imgIVI/language-L.svg" }
             ListElement { name: "Cuộc gọi"; iconD: "qrc:/imgIVI/setting.svg"; iconL: "qrc:/imgIVI/settingL.svg" }
             ListElement { name: "Tin nhắn"; iconD: "qrc:/imgIVI/setting.svg"; iconL: "qrc:/imgIVI/settingL.svg" }
-            ListElement { name: "Chế độ lái"; iconD: "qrc:/imgIVI/setting.svg"; iconL: "qrc:/imgIVI/settingL.svg" }
             ListElement { name: "Âm nhạc"; iconD: "qrc:/imgIVI/setting.svg"; iconL: "qrc:/imgIVI/settingL.svg" }
             ListElement { name: "Bản đồ"; iconD: "qrc:/imgIVI/setting.svg"; iconL: "qrc:/imgIVI/settingL.svg" }
             ListElement { name: "Thời tiết"; iconD: "qrc:/imgIVI/setting.svg"; iconL: "qrc:/imgIVI/settingL.svg" }
@@ -185,6 +227,11 @@ Window {
                 console.log("Theme changed to:", newTheme)
             }
         }
+        LanguageWindow {
+            id: languageDialog
+            onLanguageSelected: (lang) => loadLanguage(lang)  // <-- nhận signal và gọi hàm
+        }
+
     }
 
 
