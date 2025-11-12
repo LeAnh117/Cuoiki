@@ -72,5 +72,10 @@
         <file>qmldir</file>
         <file>imgIVI/car.svg</file>
         <file>imgIVI/setting.svg</file>
+        <file>SettingWindow.qml</file>
+        <file>imgIVI/settingL.svg</file>
+        <file>imgIVI/language_D.svg</file>
+        <file>imgIVI/language_D1.svg</file>
+        <file>imgIVI/language-L.svg</file>
     </qresource>
 </RCC>

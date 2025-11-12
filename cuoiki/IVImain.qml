@@ -4,7 +4,6 @@ import QtQuick.Window 2.15
 
 import QtQuick.Layouts 1.15
 import "." 1.0
-
 Window {
     id: root
     width: 500
@@ -13,7 +12,7 @@ Window {
     visible: true
     title: "IVI HMI"
 
-    property string currentTheme: "light" // or "light"
+    property string currentTheme: "dark" // or "light"
 
     // --- Màn hình khởi động ---
     Rectangle {
@@ -61,20 +60,14 @@ Window {
         visible: false
         // color: currentTheme === "dark" ? "#121212" : "#EDEDED"
 
-        // --- Hình nền ---
-        // Image {
-        //     id: wallpaper
-        //     anchors.fill: parent
-        //     source: "qrc:/imgIVI/Background.jpg"  // thay bằng ảnh nền thật
-        //     fillMode: Image.PreserveAspectCrop
-        // }
         Rectangle {
             id: background
             anchors.fill: parent
             gradient: Gradient {
-                GradientStop { position: 0.0; color: "#0A0A0A" }   // đen sâu
-                GradientStop { position: 1.0; color: "#1F1F1F" }   // xám đậm
+                GradientStop { position: 0.0; color: root.currentTheme === "dark" ? Theme.bgDark : Theme.bgLight }
+                GradientStop { position: 1.0; color: root.currentTheme === "dark" ? Theme.bgDark : Theme.bgLight }
             }
+            Behavior on gradient { ColorAnimation { duration: 500 } }
         }
         // Ánh sáng neon mờ trung tâm
         Rectangle {
@@ -83,7 +76,7 @@ Window {
             height: parent.height * 0.9
             anchors.centerIn: parent
             radius: width / 2
-            color: "#38FF14"   // neon xanh lá
+            color: Theme.neon   // neon xanh lá
             opacity: 0.08       // rất nhẹ, không gây chói
         }
 
@@ -113,34 +106,55 @@ Window {
                         anchors.top: parent.top
                         anchors.topMargin: 10
                         color: "transparent"
-                        border.color: Theme.neon
-                        border.width: 2
+
+                        property bool pressed: false
+
+                        border.color: pressed
+                                      ? Theme.textDark
+                                      : (root.currentTheme === "dark" ? Theme.borderDark : Theme.borderLight)
+                        border.width: 3
+
+                        Behavior on border.color { ColorAnimation { duration: 300 } } // hiệu ứng mượt
 
                         Image {
+                            id: iconSetting
                             anchors.centerIn: parent
-                            source: icon
-                            width: parent.width
-                            height: parent.height
+                            width: parent.width / 1.2
+                            height: parent.height /1.2
                             z: -1
-                            // color: currentTheme === "light" ? "black" : "white"
                             fillMode: Image.PreserveAspectFit
+                            source: root.currentTheme === "dark" ? iconD : iconL
 
-                            // Đổi màu icon theo theme
-                            layer.enabled: true
-                            layer.samplerName: "source"
+                            opacity: 1.0
+
+                            Behavior on opacity {
+                                NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
+                            }
                         }
-
                         MouseArea {
                             anchors.fill: parent
-                            onPressed: iconContainer.border.color = Theme.textDark
-                            onReleased: iconContainer.border.color = Theme.neon
-                            onClicked: console.log("Clicked on " + name)
+                            onPressed: iconContainer.pressed = true
+                            onReleased: iconContainer.pressed = false
+                            onClicked: {
+                                console.log("Clicked on " + name)
+                                switch(name) {
+                                case "Cài đặt":
+                                    settingsWin.visible = true
+                                    break
+                                case "Ngôn ngữ":
+
+                                case "Cuộc gọi":
+
+                                case "Tin nhắn":
+
+                                }
+                            }
                         }
                     }
 
                     Text {
                         text: name
-                        color: "white"
+                        color: root.currentTheme === "dark" ? Theme.textDark : Theme.textLight
                         font.pixelSize: 18
                         horizontalAlignment: Text.AlignHCenter
                         anchors.top: iconContainer.bottom
@@ -154,14 +168,22 @@ Window {
         // --- Model dữ liệu ứng dụng ---
         ListModel {
             id: appModel
-            ListElement { name: "Cài đặt"; icon: "qrc:/imgIVI/setting.svg" }
-            ListElement { name: "Ngôn ngữ"; icon: "qrc:/imgIVI/setting.svg" }
-            ListElement { name: "Cuộc gọi"; icon: "qrc:/imgIVI/setting.svg" }
-            ListElement { name: "Tin nhắn"; icon: "qrc:/imgIVI/setting.svg" }
-            ListElement { name: "Chế độ lái"; icon: "qrc:/imgIVI/setting.svg" }
-            ListElement { name: "Âm nhạc"; icon: "qrc:/imgIVI/setting.svg" }
-            ListElement { name: "Bản đồ"; icon: "qrc:/imgIVI/setting.svg" }
-            ListElement { name: "Thời tiết"; icon: "qrc:/imgIVI/setting.svg" }
+            ListElement { name: "Cài đặt"; iconD: "qrc:/imgIVI/setting.svg"; iconL: "qrc:/imgIVI/settingL.svg" }
+            ListElement { name: "Ngôn ngữ"; iconD: "qrc:/imgIVI/language_D1.svg"; iconL: "qrc:/imgIVI/language-L.svg" }
+            ListElement { name: "Cuộc gọi"; iconD: "qrc:/imgIVI/setting.svg"; iconL: "qrc:/imgIVI/settingL.svg" }
+            ListElement { name: "Tin nhắn"; iconD: "qrc:/imgIVI/setting.svg"; iconL: "qrc:/imgIVI/settingL.svg" }
+            ListElement { name: "Chế độ lái"; iconD: "qrc:/imgIVI/setting.svg"; iconL: "qrc:/imgIVI/settingL.svg" }
+            ListElement { name: "Âm nhạc"; iconD: "qrc:/imgIVI/setting.svg"; iconL: "qrc:/imgIVI/settingL.svg" }
+            ListElement { name: "Bản đồ"; iconD: "qrc:/imgIVI/setting.svg"; iconL: "qrc:/imgIVI/settingL.svg" }
+            ListElement { name: "Thời tiết"; iconD: "qrc:/imgIVI/setting.svg"; iconL: "qrc:/imgIVI/settingL.svg" }
+        }
+        // --- Gọi cửa sổ Cài đặt ---
+        SettingWindow {
+            id: settingsWin
+            onThemeChanged: {
+                root.currentTheme = newTheme
+                console.log("Theme changed to:", newTheme)
+            }
         }
     }
 

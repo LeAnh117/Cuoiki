@@ -8,6 +8,7 @@ QtObject {
 
     property color textDark: "#FFFFFF"
     property color iconDark: "#FFFFFF"
+    property color borderDark: "#38FF14"
 
     // Neon nhấn
     property color neon: "#38FF14"   // Màu bạn chọn - N1
@@ -16,4 +17,5 @@ QtObject {
     property color bgLight: "#FAFAFA"
     property color textLight: "#000000"
     property color iconLight: "#000000"
+    property color borderLight: "#555555"
 }
