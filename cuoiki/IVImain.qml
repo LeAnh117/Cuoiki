@@ -180,6 +180,9 @@ Window {
                                 case "Cài đặt":
                                     settingsWin.visible = true
                                     break
+                                case "Settings":
+                                    settingsWin.visible = true
+                                    break
                                 case "Ngôn ngữ":
                                     languageDialog.open()
                                     break
@@ -187,9 +190,8 @@ Window {
                                     languageDialog.open()
                                     break
                                 case "Cuộc gọi":
-
-                                case "Tin nhắn":
-
+                                    incomingCall.visible = true
+                                    break
                                 }
                             }
                         }
@@ -231,6 +233,45 @@ Window {
             id: languageDialog
             onLanguageSelected: (lang) => loadLanguage(lang)  // <-- nhận signal và gọi hàm
         }
+        IncomingCallScreen {
+            id: incomingCall
+            visible: false
+
+            onAcceptCall: {
+                visible = false
+                activeCall.startCall(callerName)
+            }
+            onRejectCall: {
+                visible = false
+                mainScreen.visible = true
+            }
+        }
+        ActiveCallScreen {
+            id: activeCall
+            visible: false
+            onEndCall: {
+                visible = false
+                mainScreen.visible = true
+            }
+        }
+        Connections {
+            target: serialHandler
+
+            function onIncomingCall(callerName) {
+                console.log("📞 Cuộc gọi đến từ:", callerName)
+                // mainScreen.visible = false
+                incomingCall.callerName = callerName
+                incomingCall.visible = true
+            }
+
+            function onEndCall() {
+                console.log("📴 Kết thúc cuộc gọi từ ESP32")
+                incomingCall.visible = false
+                activeCall.visible = false
+                mainScreen.visible = true
+            }
+        }
+
 
     }
 

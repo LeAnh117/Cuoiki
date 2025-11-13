@@ -88,5 +88,7 @@
         <file>imgIVI/music_L.svg</file>
         <file>imgIVI/weather_D.svg</file>
         <file>imgIVI/weather_L.svg</file>
+        <file>IncomingCallScreen.qml</file>
+        <file>ActiveCallScreen.qml</file>
     </qresource>
 </RCC>
