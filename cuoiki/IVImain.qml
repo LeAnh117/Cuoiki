@@ -18,6 +18,8 @@ Window {
     // --- Ngôn ngữ hiện tại ---
     property string currentLanguage: "vi"  // default
 
+    property int unreadMessageCount: 0
+
     // --- Dictionary bản dịch ---
     property var dict: {
         "vi": {
@@ -170,6 +172,28 @@ Window {
                                 NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
                             }
                         }
+                        Rectangle {
+                            id: messageBadge
+                            visible: name === "Tin nhắn" && root.unreadMessageCount > 0
+                            width: 24
+                            height: 24
+                            radius: 12
+                            color: "red"
+                            border.color: "white"
+                            border.width: 2
+                            anchors.top: iconContainer.top
+                            anchors.right: iconContainer.right
+                            anchors.margins: -5
+
+                            Text {
+                                anchors.centerIn: parent
+                                text: root.unreadMessageCount
+                                color: "white"
+                                font.bold: true
+                                font.pixelSize: 14
+                            }
+                        }
+
                         MouseArea {
                             anchors.fill: parent
                             onPressed: iconContainer.pressed = true
@@ -178,20 +202,30 @@ Window {
                                 console.log("Clicked on " + root.tr(name))
                                 switch(root.tr(name)) {
                                 case "Cài đặt":
-                                    settingsWin.visible = true
-                                    break
                                 case "Settings":
                                     settingsWin.visible = true
                                     break
                                 case "Ngôn ngữ":
-                                    languageDialog.open()
-                                    break
                                 case "Language":
                                     languageDialog.open()
                                     break
                                 case "Cuộc gọi":
                                     incomingCall.visible = true
                                     break
+                                case "Tin nhắn":
+                                case "Messages":
+                                    unreadMessageCount = 0      // reset badge khi mở
+                                    messagePage.visible = true  // mở màn hình tin nhắn
+                                    break
+                                case "Thời tiết":
+                                case "Weather":
+                                    root.unreadMessageCount++
+                                    messageModel.append({
+                                        sender: "ESP32",
+                                        content: "Tin nhắn test " + root.unreadMessageCount
+                                    })
+                                    break
+
                                 }
                             }
                         }
@@ -221,6 +255,11 @@ Window {
             ListElement { name: "Bản đồ"; iconD: "qrc:/imgIVI/map_D.svg"; iconL: "qrc:/imgIVI/map_L.svg" }
             ListElement { name: "Thời tiết"; iconD: "qrc:/imgIVI/weather_D.svg"; iconL: "qrc:/imgIVI/weather_L.svg" }
         }
+        // --- Model tin nhắn ---
+        ListModel {
+            id: messageModel
+        }
+
         // --- Gọi cửa sổ Cài đặt ---
         SettingWindow {
             id: settingsWin
@@ -229,10 +268,12 @@ Window {
                 console.log("Theme changed to:", newTheme)
             }
         }
+
         LanguageWindow {
             id: languageDialog
             onLanguageSelected: (lang) => loadLanguage(lang)  // <-- nhận signal và gọi hàm
         }
+
         IncomingCallScreen {
             id: incomingCall
             visible: false
@@ -272,6 +313,16 @@ Window {
             }
         }
 
+        MessagePage {
+            id: messagePage
+            anchors.fill: parent
+            visible: false
+            messageModel: messageModel
+
+            onBackRequested: {
+                messagePage.visible = false
+            }
+        }
 
     }
 

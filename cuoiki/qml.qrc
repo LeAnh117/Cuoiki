@@ -90,5 +90,6 @@
         <file>imgIVI/weather_L.svg</file>
         <file>IncomingCallScreen.qml</file>
         <file>ActiveCallScreen.qml</file>
+        <file>MessagePage.qml</file>
     </qresource>
 </RCC>
