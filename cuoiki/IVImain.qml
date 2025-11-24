@@ -59,40 +59,76 @@ Window {
     Rectangle {
         id: splashScreen
         anchors.fill: parent
-        color: "#4D4D4D"
         visible: true
+        color: "#000000"
 
+        // Nền gradient đẹp
         Rectangle {
-            id: logoContainer
-            anchors.centerIn: parent
-            width: 100
-            height: 100
-            radius: 15
-            clip: true
-            Image {
-                id: logo
-                source: "qrc:/imgIVI/startLogo.jpeg"    // Thay đường dẫn bằng logo của bạn
-                anchors.centerIn: parent
-                width: parent.width
-                height: parent.height
-                opacity: 0.0
-
-                SequentialAnimation {
-                    id: fadeAnim
-                    NumberAnimation { target: logo; property: "opacity"; from: 0.0; to: 1.0; duration: 2000; easing.type: Easing.InOutQuad }
-                    PauseAnimation { duration: 1000 }
-                    NumberAnimation { target: logo; property: "opacity"; from: 1.0; to: 0.0; duration: 2000; easing.type: Easing.InOutQuad }
-
-                    onStopped: {
-                        splashScreen.visible = false
-                        mainScreen.visible = true
-                    }
-                }
-
-                Component.onCompleted: fadeAnim.start()
+            anchors.fill: parent
+            gradient: Gradient {
+                GradientStop { position: 0.0; color: "#0A0A0A" }
+                GradientStop { position: 1.0; color: "#1A1A1A" }
             }
         }
+
+        // Vầng sáng lan rộng (glow)
+        Rectangle {
+            id: glow
+            width: 300
+            height: 300
+            radius: 200
+            color: "#00FFAA"
+            opacity: 0.0
+            anchors.centerIn: parent
+
+            SequentialAnimation {
+                running: true
+
+                // Lan sáng nhẹ
+                NumberAnimation { target: glow; property: "opacity"; from: 0.0; to: 0.25; duration: 2500; easing.type: Easing.InOutQuad }
+                NumberAnimation { target: glow; property: "opacity"; from: 0.25; to: 0.0; duration: 2500; easing.type: Easing.InOutQuad }
+            }
+        }
+
+        // Logo zoom-in + fade-in + fade-out
+        Image {
+            id: logo
+            source: "qrc:/imgIVI/car.svg"
+            anchors.centerIn: parent
+            width: 130
+            height: 130
+            opacity: 0.0
+            scale: 0.7
+            smooth: true
+            antialiasing: true
+
+            SequentialAnimation {
+                id: logoAnim
+
+                // Zoom in + fade in
+                ParallelAnimation {
+                    NumberAnimation { target: logo; property: "opacity"; from: 0.0; to: 1.0; duration: 2500; easing.type: Easing.OutCubic }
+                    NumberAnimation { target: logo; property: "scale"; from: 0.7; to: 1.0; duration: 2500; easing.type: Easing.OutBack }
+                }
+
+                PauseAnimation { duration: 800 }
+
+                // Fade out + zoom out nhẹ
+                ParallelAnimation {
+                    NumberAnimation { target: logo; property: "opacity"; from: 1.0; to: 0.0; duration: 2000; easing.type: Easing.InCubic }
+                    NumberAnimation { target: logo; property: "scale"; from: 1.0; to: 1.2; duration: 2000; easing.type: Easing.InOutQuad }
+                }
+
+                onStopped: {
+                    splashScreen.visible = false
+                    mainScreen.visible = true
+                }
+            }
+
+            Component.onCompleted: logoAnim.start()
+        }
     }
+
 
     // --- Màn hình chính (ẩn ban đầu) ---
     Rectangle {
