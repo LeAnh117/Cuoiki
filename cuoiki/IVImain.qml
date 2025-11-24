@@ -297,20 +297,20 @@ Window {
         }
         Connections {
             target: serialHandler
-
+            //cuoc goi den
             function onIncomingCall(callerName) {
                 console.log("📞 Cuộc gọi đến từ:", callerName)
                 // mainScreen.visible = false
                 incomingCall.callerName = callerName
                 incomingCall.visible = true
             }
-
             function onEndCall() {
                 console.log("📴 Kết thúc cuộc gọi từ ESP32")
                 incomingCall.visible = false
                 activeCall.visible = false
                 mainScreen.visible = true
             }
+            //tin nhan den
             function onMessageReceived(sender, content) {
                 console.log("📨 Tin nhắn đến từ ESP32:", content)
 

@@ -29,6 +29,7 @@ public:
 signals:
     void incomingCall(QString callerName);
     void endCall();
+    //tin nhan den
     void messageReceived(QString sender, QString content);
 
 private slots:
@@ -46,7 +47,7 @@ private slots:
         else if (data.contains("CALL_END")) {
             emit endCall();
         }
-        else if (data.startsWith("MSG:")) {
+        else if (data.startsWith("MSG:")) {    //tin nhan den
             QString msg = QString::fromUtf8(data.mid(4)).trimmed();
 
             if (!msg.isEmpty()) {
