@@ -311,6 +311,16 @@ Window {
                 activeCall.visible = false
                 mainScreen.visible = true
             }
+            function onMessageReceived(sender, content) {
+                console.log("📨 Tin nhắn đến từ ESP32:", content)
+
+                root.unreadMessageCount++
+
+                messageModel.append({
+                    sender: sender,
+                    content: content
+                })
+            }
         }
 
         MessagePage {
@@ -323,9 +333,5 @@ Window {
                 messagePage.visible = false
             }
         }
-
     }
-
-
-
 }

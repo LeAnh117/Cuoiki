@@ -29,6 +29,7 @@ public:
 signals:
     void incomingCall(QString callerName);
     void endCall();
+    void messageReceived(QString sender, QString content);
 
 private slots:
     void onReadyRead() {
@@ -44,6 +45,13 @@ private slots:
         }
         else if (data.contains("CALL_END")) {
             emit endCall();
+        }
+        else if (data.startsWith("MSG:")) {
+            QString msg = QString::fromUtf8(data.mid(4)).trimmed();
+
+            if (!msg.isEmpty()) {
+                emit messageReceived("ESP32", msg);
+            }
         }
         qDebug() << "Raw data:" << data;
 
